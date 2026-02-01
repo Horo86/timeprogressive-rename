@@ -116,11 +116,20 @@ Lo script gestisce automaticamente i conflitti di nomi:
 Le estensioni sono trattate in modo case-insensitive:
 - `.jpg`, `.JPG`, `.Jpg` sono tutte considerate uguali
 
+## Documentazione
+
+- **[EXAMPLES.md](EXAMPLES.md)** - Esempi pratici d'uso in vari scenari
+- **[TESTING.md](TESTING.md)** - Guida completa per testare lo script
+- **[GIT_GUIDE.md](GIT_GUIDE.md)** - Guida per principianti a Git e GitHub
+
 ## Struttura del progetto
 
 ```
 timeprogressive-rename/
 ├── README.md              # Questo file
+├── EXAMPLES.md            # Esempi pratici d'uso
+├── TESTING.md             # Guida al testing
+├── GIT_GUIDE.md          # Guida Git per principianti
 ├── LICENSE                # Licenza del progetto
 ├── .gitignore            # File da ignorare in Git
 ├── timeprogressive-rename # Script principale
