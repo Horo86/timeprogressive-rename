@@ -1,0 +1,321 @@
+#!/usr/bin/env python3
+"""
+timeprogressive-rename - Rinomina file con numerazione progressiva basata su data
+
+Questo script rinomina file con estensioni specificate aggiungendo un prefisso
+e un numero progressivo basato sulla data di creazione (o modifica) del file.
+
+Autore: Il tuo nome
+Licenza: MIT
+"""
+
+import os
+import sys
+import argparse
+from pathlib import Path
+from datetime import datetime
+import tempfile
+
+
+# Codici colore ANSI per il terminale
+class Colors:
+    """Definisce i colori per l'output del terminale"""
+    HEADER = '\033[95m'
+    OKBLUE = '\033[94m'
+    OKCYAN = '\033[96m'
+    OKGREEN = '\033[92m'
+    WARNING = '\033[93m'
+    FAIL = '\033[91m'
+    ENDC = '\033[0m'
+    BOLD = '\033[1m'
+    UNDERLINE = '\033[4m'
+
+
+def print_colored(text, color):
+    """
+    Stampa testo colorato nel terminale
+    
+    Args:
+        text (str): Il testo da stampare
+        color (str): Il codice colore da usare
+    """
+    print(f"{color}{text}{Colors.ENDC}")
+
+
+def get_file_creation_time(filepath):
+    """
+    Ottiene la data di creazione del file, se non disponibile usa la data di modifica
+    
+    Args:
+        filepath (Path): Il percorso del file
+        
+    Returns:
+        float: Timestamp della creazione o modifica del file
+    """
+    stat = filepath.stat()
+    
+    # Prova a ottenere la data di creazione (disponibile su alcuni filesystem)
+    try:
+        # st_birthtime su alcuni sistemi, st_ctime su ext4 (ma è change time, non creation)
+        # Su Linux ext4, usiamo st_mtime come fallback affidabile
+        if hasattr(stat, 'st_birthtime'):
+            return stat.st_birthtime
+        else:
+            # Su ext4 e molti filesystem Linux, usiamo mtime (data di modifica)
+            return stat.st_mtime
+    except AttributeError:
+        return stat.st_mtime
+
+
+def find_files_by_extensions(directory, extensions):
+    """
+    Trova tutti i file con le estensioni specificate nella directory
+    
+    Args:
+        directory (Path): La directory in cui cercare
+        extensions (list): Lista di estensioni (senza punto)
+        
+    Returns:
+        list: Lista di oggetti Path dei file trovati
+    """
+    files = []
+    
+    # Normalizza le estensioni in minuscolo per il confronto case-insensitive
+    extensions_lower = [ext.lower() for ext in extensions]
+    
+    # Itera solo sui file nella directory corrente (non ricorsivo)
+    for item in directory.iterdir():
+        if item.is_file():
+            # Ottiene l'estensione senza il punto e in minuscolo
+            file_ext = item.suffix[1:].lower() if item.suffix else ''
+            
+            if file_ext in extensions_lower:
+                files.append(item)
+    
+    return files
+
+
+def sort_files_by_date(files):
+    """
+    Ordina i file per data di creazione/modifica
+    
+    Args:
+        files (list): Lista di oggetti Path
+        
+    Returns:
+        list: Lista di tuple (Path, timestamp) ordinata per timestamp
+    """
+    files_with_dates = []
+    
+    for file in files:
+        timestamp = get_file_creation_time(file)
+        files_with_dates.append((file, timestamp))
+    
+    # Ordina per timestamp
+    files_with_dates.sort(key=lambda x: x[1])
+    
+    return files_with_dates
+
+
+def generate_new_names(files_with_dates, prefix):
+    """
+    Genera i nuovi nomi per i file
+    
+    Args:
+        files_with_dates (list): Lista di tuple (Path, timestamp)
+        prefix (str): Il prefisso da usare per i nuovi nomi
+        
+    Returns:
+        list: Lista di tuple (Path originale, nuovo nome, timestamp)
+    """
+    new_names = []
+    
+    for index, (file, timestamp) in enumerate(files_with_dates, start=1):
+        # Genera il numero progressivo con 3 cifre
+        number = f"{index:03d}"
+        
+        # Mantiene l'estensione originale
+        extension = file.suffix
+        
+        # Crea il nuovo nome
+        new_name = f"{prefix}_{number}{extension}"
+        
+        new_names.append((file, new_name, timestamp))
+    
+    return new_names
+
+
+def show_preview(new_names, directory):
+    """
+    Mostra un'anteprima delle operazioni di rinomina (dry run)
+    
+    Args:
+        new_names (list): Lista di tuple (Path originale, nuovo nome, timestamp)
+        directory (Path): La directory di lavoro
+    """
+    print_colored("\n" + "="*80, Colors.HEADER)
+    print_colored("ANTEPRIMA OPERAZIONI DI RINOMINA", Colors.HEADER + Colors.BOLD)
+    print_colored("="*80 + "\n", Colors.HEADER)
+    
+    print(f"{'N°':<5} {'Data Creazione/Modifica':<22} {'Nome Originale':<25} {'→':<3} {'Nuovo Nome':<25}")
+    print("-" * 80)
+    
+    for index, (original_path, new_name, timestamp) in enumerate(new_names, start=1):
+        date_str = datetime.fromtimestamp(timestamp).strftime('%Y-%m-%d %H:%M:%S')
+        original_name = original_path.name
+        
+        # Usa colori diversi per righe alterne per migliorare leggibilità
+        color = Colors.OKCYAN if index % 2 == 0 else Colors.OKBLUE
+        print_colored(f"{index:<5} {date_str:<22} {original_name:<25} {'→':<3} {new_name:<25}", color)
+    
+    print("\n" + "-" * 80)
+    print_colored(f"Totale file da rinominare: {len(new_names)}", Colors.BOLD)
+    print_colored("="*80 + "\n", Colors.HEADER)
+
+
+def rename_files(new_names, directory):
+    """
+    Esegue la rinomina dei file gestendo eventuali conflitti
+    
+    Args:
+        new_names (list): Lista di tuple (Path originale, nuovo nome, timestamp)
+        directory (Path): La directory di lavoro
+        
+    Returns:
+        tuple: (numero file rinominati con successo, numero errori)
+    """
+    success_count = 0
+    error_count = 0
+    temp_renames = []  # Tiene traccia delle rinominazioni temporanee
+    
+    try:
+        # Prima fase: rinominare i file che hanno conflitti con nomi temporanei
+        for original_path, new_name, _ in new_names:
+            new_path = directory / new_name
+            
+            # Se il nuovo nome esiste ed è diverso dal file originale, rinomina temporaneamente
+            if new_path.exists() and new_path != original_path:
+                temp_name = f".tmp_{original_path.name}_{os.getpid()}"
+                temp_path = directory / temp_name
+                new_path.rename(temp_path)
+                temp_renames.append((temp_path, new_path))
+        
+        # Seconda fase: eseguire tutte le rinominazioni principali
+        for original_path, new_name, _ in new_names:
+            try:
+                new_path = directory / new_name
+                
+                # Se il file originale esiste ancora (non è stato rinominato temporaneamente)
+                if original_path.exists():
+                    original_path.rename(new_path)
+                    success_count += 1
+                    print_colored(f"✓ Rinominato: {original_path.name} → {new_name}", Colors.OKGREEN)
+                    
+            except Exception as e:
+                error_count += 1
+                print_colored(f"✗ Errore rinominando {original_path.name}: {str(e)}", Colors.FAIL)
+        
+        # Terza fase: rinominare i file temporanei ai loro nomi finali
+        for temp_path, final_path in temp_renames:
+            try:
+                if temp_path.exists():
+                    temp_path.rename(final_path)
+                    success_count += 1
+                    print_colored(f"✓ Rinominato: {temp_path.name} → {final_path.name}", Colors.OKGREEN)
+            except Exception as e:
+                error_count += 1
+                print_colored(f"✗ Errore rinominando file temporaneo {temp_path.name}: {str(e)}", Colors.FAIL)
+                
+    except Exception as e:
+        print_colored(f"\n✗ Errore durante la rinomina: {str(e)}", Colors.FAIL)
+        error_count += 1
+    
+    return success_count, error_count
+
+
+def main():
+    """Funzione principale dello script"""
+    
+    # Configurazione del parser degli argomenti
+    parser = argparse.ArgumentParser(
+        description='Rinomina file con numerazione progressiva basata su data di creazione/modifica',
+        epilog='Esempio: timeprogressive-rename jpg jpeg png'
+    )
+    parser.add_argument(
+        'extensions',
+        nargs='+',
+        help='Estensioni dei file da rinominare (senza punto, es: jpg png)'
+    )
+    
+    # Parse degli argomenti
+    args = parser.parse_args()
+    
+    # Directory corrente
+    current_dir = Path.cwd()
+    
+    # Intestazione
+    print_colored("\n" + "="*80, Colors.HEADER)
+    print_colored("TIME PROGRESSIVE RENAME", Colors.HEADER + Colors.BOLD)
+    print_colored("="*80, Colors.HEADER)
+    print(f"\nDirectory: {current_dir}")
+    print(f"Estensioni: {', '.join(args.extensions)}\n")
+    
+    # Trova i file
+    print_colored("Ricerca file in corso...", Colors.OKCYAN)
+    files = find_files_by_extensions(current_dir, args.extensions)
+    
+    if not files:
+        print_colored(f"\n✗ Nessun file trovato con le estensioni specificate: {', '.join(args.extensions)}", 
+                     Colors.WARNING)
+        sys.exit(0)
+    
+    print_colored(f"✓ Trovati {len(files)} file", Colors.OKGREEN)
+    
+    # Richiedi il prefisso
+    print()
+    prefix = input(f"{Colors.BOLD}Inserisci il prefisso da usare: {Colors.ENDC}").strip()
+    
+    if not prefix:
+        print_colored("\n✗ Prefisso non valido. Operazione annullata.", Colors.FAIL)
+        sys.exit(1)
+    
+    # Ordina i file per data
+    files_with_dates = sort_files_by_date(files)
+    
+    # Genera i nuovi nomi
+    new_names = generate_new_names(files_with_dates, prefix)
+    
+    # Mostra anteprima
+    show_preview(new_names, current_dir)
+    
+    # Chiedi conferma
+    while True:
+        confirm = input(f"{Colors.BOLD}Procedere con la rinomina? (Y/N): {Colors.ENDC}").strip().upper()
+        
+        if confirm == 'Y':
+            print_colored("\nEsecuzione rinomina in corso...\n", Colors.OKCYAN)
+            success, errors = rename_files(new_names, current_dir)
+            
+            # Statistiche finali
+            print_colored("\n" + "="*80, Colors.HEADER)
+            print_colored("STATISTICHE FINALI", Colors.HEADER + Colors.BOLD)
+            print_colored("="*80, Colors.HEADER)
+            print_colored(f"\n✓ File rinominati con successo: {success}", Colors.OKGREEN)
+            
+            if errors > 0:
+                print_colored(f"✗ Errori riscontrati: {errors}", Colors.FAIL)
+            else:
+                print_colored("✓ Nessun errore", Colors.OKGREEN)
+            
+            print_colored("\n" + "="*80 + "\n", Colors.HEADER)
+            break
+            
+        elif confirm == 'N':
+            print_colored("\n✓ Operazione annullata dall'utente.", Colors.WARNING)
+            sys.exit(0)
+        else:
+            print_colored("Risposta non valida. Inserire Y o N.", Colors.WARNING)
+
+
+if __name__ == "__main__":
+    main()
