@@ -18,7 +18,7 @@ Uno script Python per rinominare file in modo organizzato aggiungendo un prefiss
 
 ## Requisiti
 
-- Python 3.6 o superior
+- Python 3.6 o superiore
 - Sistema operativo Linux
 
 ## Installazione
