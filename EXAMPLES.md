@@ -1,13 +1,13 @@
-# Esempi Pratici di Utilizzo
+# Practical Usage Examples
 
-Questa guida mostra esempi concreti di come usare `timeprogressive-rename` in vari scenari.
+This guide shows concrete examples of how to use `timeprogressive-rename` in various scenarios.
 
-## Scenario 1: Rinominare foto delle vacanze
+## Scenario 1: Rename vacation photos
 
-Hai una cartella con foto scattate in date diverse durante una vacanza:
+You have a folder with photos taken on different dates during a vacation:
 
 ```
-foto/
+photos/
 ├── IMG_20240701_143022.jpg
 ├── IMG_20240702_091533.jpg
 ├── IMG_20240702_183044.jpg
@@ -15,52 +15,52 @@ foto/
 └── DCIM_0002.jpg
 ```
 
-**Comando:**
+**Command:**
 ```bash
-cd foto
+cd photos
 timeprogressive-rename jpg
 ```
 
-**Input richiesto:**
+**Required input:**
 ```
-Inserisci il prefisso da usare: vacanza_mare
+Enter the prefix to use: vacation_beach
 ```
 
-**Risultato:**
+**Result:**
 ```
-vacanza_mare_001.jpg  (foto più vecchia)
-vacanza_mare_002.jpg
-vacanza_mare_003.jpg
-vacanza_mare_004.jpg
-vacanza_mare_005.jpg  (foto più recente)
+vacation_beach_001.jpg  (oldest photo)
+vacation_beach_002.jpg
+vacation_beach_003.jpg
+vacation_beach_004.jpg
+vacation_beach_005.jpg  (newest photo)
 ```
 
 ---
 
-## Scenario 2: Organizzare screenshot
+## Scenario 2: Organize screenshots
 
-Hai molti screenshot con nomi casuali:
+You have many screenshots with random names:
 
 ```
-screenshot/
+screenshots/
 ├── Screenshot from 2024-01-15 10-23-45.png
 ├── Schermata del 2024-01-16 alle 14.30.22.png
 ├── Screenshot_20240117_093011.png
 └── capture.png
 ```
 
-**Comando:**
+**Command:**
 ```bash
-cd screenshot
+cd screenshots
 timeprogressive-rename png
 ```
 
-**Input richiesto:**
+**Required input:**
 ```
-Inserisci il prefisso da usare: screen
+Enter the prefix to use: screen
 ```
 
-**Risultato:**
+**Result:**
 ```
 screen_001.png
 screen_002.png
@@ -70,12 +70,12 @@ screen_004.png
 
 ---
 
-## Scenario 3: Rinominare video di un evento
+## Scenario 3: Rename event videos
 
-Hai video girati con diversi dispositivi durante un evento:
+You have videos recorded with different devices during an event:
 
 ```
-evento/
+event/
 ├── VID_20240320_100530.mp4
 ├── video(1).mp4
 ├── MVI_2034.MOV
@@ -83,66 +83,66 @@ evento/
 └── clip.avi
 ```
 
-**Comando:**
+**Command:**
 ```bash
-cd evento
+cd event
 timeprogressive-rename mp4 mov avi
 ```
 
-**Input richiesto:**
+**Required input:**
 ```
-Inserisci il prefisso da usare: conferenza_2024
+Enter the prefix to use: conference_2024
 ```
 
-**Risultato:**
+**Result:**
 ```
-conferenza_2024_001.mp4
-conferenza_2024_002.mp4
-conferenza_2024_003.MOV   (mantiene l'estensione originale)
-conferenza_2024_004.MP4
-conferenza_2024_005.avi
+conference_2024_001.mp4
+conference_2024_002.mp4
+conference_2024_003.MOV   (keeps original extension)
+conference_2024_004.MP4
+conference_2024_005.avi
 ```
 
 ---
 
-## Scenario 4: Organizzare documenti scansionati
+## Scenario 4: Organize scanned documents
 
-Hai scansioni di documenti in vari formati:
+You have scans of documents in various formats:
 
 ```
-scansioni/
+scans/
 ├── scan0001.pdf
-├── documento.PDF
-├── scansione (1).pdf
+├── document.PDF
+├── scan (1).pdf
 ├── doc_001.jpg
 └── img_2024.jpeg
 ```
 
-**Comando:**
+**Command:**
 ```bash
-cd scansioni
+cd scans
 timeprogressive-rename pdf jpg jpeg
 ```
 
-**Input richiesto:**
+**Required input:**
 ```
-Inserisci il prefisso da usare: contratto_acquisto
+Enter the prefix to use: purchase_agreement
 ```
 
-**Risultato:**
+**Result:**
 ```
-contratto_acquisto_001.pdf
-contratto_acquisto_002.PDF
-contratto_acquisto_003.pdf
-contratto_acquisto_004.jpg
-contratto_acquisto_005.jpeg
+purchase_agreement_001.pdf
+purchase_agreement_002.PDF
+purchase_agreement_003.pdf
+purchase_agreement_004.jpg
+purchase_agreement_005.jpeg
 ```
 
 ---
 
-## Scenario 5: Rinominare file audio
+## Scenario 5: Rename audio files
 
-Hai registrazioni audio di lezioni o podcast:
+You have audio recordings of lectures or podcasts:
 
 ```
 audio/
@@ -152,137 +152,137 @@ audio/
 └── audio_20240116.wav
 ```
 
-**Comando:**
+**Command:**
 ```bash
 cd audio
 timeprogressive-rename mp3 m4a wav
 ```
 
-**Input richiesto:**
+**Required input:**
 ```
-Inserisci il prefisso da usare: lezione_python
+Enter the prefix to use: python_lesson
 ```
 
-**Risultato:**
+**Result:**
 ```
-lezione_python_001.m4a
-lezione_python_002.m4a
-lezione_python_003.mp3
-lezione_python_004.wav
+python_lesson_001.m4a
+python_lesson_002.m4a
+python_lesson_003.mp3
+python_lesson_004.wav
 ```
 
 ---
 
-## Scenario 6: Workflow completo con anteprima
+## Scenario 6: Complete workflow with preview
 
-Esempio completo di una sessione interattiva:
+Complete example of an interactive session:
 
 ```bash
-$ cd ~/Downloads/foto_compleanno
+$ cd ~/Downloads/birthday_photos
 $ timeprogressive-rename jpg jpeg
 
 ================================================================================
 TIME PROGRESSIVE RENAME
 ================================================================================
 
-Directory: /home/user/Downloads/foto_compleanno
-Estensioni: jpg, jpeg
+Directory: /home/user/Downloads/birthday_photos
+Extensions: jpg, jpeg
 
-Ricerca file in corso...
-✓ Trovati 12 file
+Searching for files...
+✓ Found 12 files
 
-Inserisci il prefisso da usare: compleanno_2024
+Enter the prefix to use: birthday_2024
 
 ================================================================================
-ANTEPRIMA OPERAZIONI DI RINOMINA
+RENAME OPERATIONS PREVIEW
 ================================================================================
 
-N°    Data Creazione/Modifica Nome Originale            →   Nuovo Nome               
+No    Creation/Modification Date Original Name             →   New Name              
 --------------------------------------------------------------------------------
-1     2024-03-15 18:30:45    IMG_0001.jpg              →   compleanno_2024_001.jpg  
-2     2024-03-15 18:31:12    IMG_0002.jpg              →   compleanno_2024_002.jpg  
-3     2024-03-15 18:35:03    DSC_1234.jpeg             →   compleanno_2024_003.jpeg 
-4     2024-03-15 18:42:56    foto_torta.jpg            →   compleanno_2024_004.jpg  
-5     2024-03-15 19:15:23    gruppo.JPG                →   compleanno_2024_005.JPG  
+1     2024-03-15 18:30:45    IMG_0001.jpg              →   birthday_2024_001.jpg  
+2     2024-03-15 18:31:12    IMG_0002.jpg              →   birthday_2024_002.jpg  
+3     2024-03-15 18:35:03    DSC_1234.jpeg             →   birthday_2024_003.jpeg 
+4     2024-03-15 18:42:56    cake_photo.jpg            →   birthday_2024_004.jpg  
+5     2024-03-15 19:15:23    group.JPG                 →   birthday_2024_005.JPG  
 ...
 
 --------------------------------------------------------------------------------
-Totale file da rinominare: 12
+Total files to rename: 12
 ================================================================================
 
-Procedere con la rinomina? (Y/N): Y
+Proceed with rename? (Y/N): Y
 
-Esecuzione rinomina in corso...
+Executing rename...
 
-✓ Rinominato: IMG_0001.jpg → compleanno_2024_001.jpg
-✓ Rinominato: IMG_0002.jpg → compleanno_2024_002.jpg
-✓ Rinominato: DSC_1234.jpeg → compleanno_2024_003.jpeg
+✓ Renamed: IMG_0001.jpg → birthday_2024_001.jpg
+✓ Renamed: IMG_0002.jpg → birthday_2024_002.jpg
+✓ Renamed: DSC_1234.jpeg → birthday_2024_003.jpeg
 ...
 
 ================================================================================
-STATISTICHE FINALI
+FINAL STATISTICS
 ================================================================================
 
-✓ File rinominati con successo: 12
-✓ Nessun errore
+✓ Files successfully renamed: 12
+✓ No errors
 
 ================================================================================
 ```
 
 ---
 
-## Suggerimenti e Best Practices
+## Tips and Best Practices
 
-### Prefissi consigliati
+### Recommended prefixes
 
-- **Date**: `2024_gennaio`, `2024-01-15`
-- **Eventi**: `matrimonio_luca`, `conferenza_ai`
-- **Progetti**: `progetto_tesi`, `sito_web`
-- **Categorie**: `fatture_2024`, `ricevute_gennaio`
+- **Dates**: `2024_january`, `2024-01-15`
+- **Events**: `john_wedding`, `ai_conference`
+- **Projects**: `thesis_project`, `website`
+- **Categories**: `invoices_2024`, `receipts_january`
 
-### Prima di iniziare
+### Before you start
 
-1. **Fai sempre un backup** prima di rinominare molti file importanti
-2. **Controlla l'anteprima** attentamente prima di confermare
-3. **Usa prefissi descrittivi** che rendano facile identificare i file
-4. **Testa prima** con pochi file in una cartella di prova
+1. **Always make a backup** before renaming many important files
+2. **Check the preview** carefully before confirming
+3. **Use descriptive prefixes** that make it easy to identify files
+4. **Test first** with a few files in a test folder
 
-### Dopo la rinomina
+### After renaming
 
-Se hai rinominato file per errore, puoi:
-1. Annullare l'operazione con `Ctrl+Z` se hai fatto il backup
-2. Usare lo script di nuovo con un prefisso diverso
-3. Rinominare manualmente se sono pochi file
+If you've renamed files by mistake, you can:
+1. Undo the operation with `Ctrl+Z` if you made a backup
+2. Use the script again with a different prefix
+3. Rename manually if there are only a few files
 
 ---
 
-## Integrazione con altri strumenti
+## Integration with other tools
 
-### Usare con find per selezionare file specifici
+### Use with find to select specific files
 
-Prima sposta i file che vuoi rinominare in una cartella temporanea:
+First move the files you want to rename to a temporary folder:
 
 ```bash
-# Trova e sposta solo le foto più grandi di 1MB
+# Find and move only photos larger than 1MB
 find . -name "*.jpg" -size +1M -exec mv {} temp_folder/ \;
 
-# Ora rinomina
+# Now rename
 cd temp_folder
 timeprogressive-rename jpg
 ```
 
-### Creare uno script wrapper
+### Create a wrapper script
 
-Puoi creare uno script bash personalizzato che combina operazioni:
+You can create a custom bash script that combines operations:
 
 ```bash
 #!/bin/bash
 # rename_and_move.sh
 
-# Rinomina
+# Rename
 timeprogressive-rename jpg jpeg png
 
-# Sposta in una cartella archive
+# Move to archive folder
 mkdir -p ../archive_$(date +%Y%m%d)
 mv *.jpg *.jpeg *.png ../archive_$(date +%Y%m%d)/
 ```
@@ -291,19 +291,19 @@ mv *.jpg *.jpeg *.png ../archive_$(date +%Y%m%d)/
 
 ## Troubleshooting
 
-### Problema: "Nessun file trovato"
-**Soluzione**: Verifica di essere nella cartella corretta e che le estensioni siano scritte correttamente (senza punto).
+### Problem: "No files found"
+**Solution**: Make sure you're in the correct folder and that extensions are spelled correctly (without dot).
 
-### Problema: Lo script non si avvia
-**Soluzione**: Assicurati che lo script sia eseguibile:
+### Problem: The script doesn't start
+**Solution**: Make sure the script is executable:
 ```bash
 chmod +x timeprogressive-rename
 ```
 
-### Problema: Errori di permessi
-**Soluzione**: Verifica di avere i permessi di scrittura nella cartella:
+### Problem: Permission errors
+**Solution**: Verify that you have write permissions in the folder:
 ```bash
 ls -la
-# Se necessario, cambia i permessi
+# If necessary, change permissions
 chmod u+w *
 ```

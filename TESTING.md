@@ -1,29 +1,29 @@
-# Guida al Testing
+# Testing Guide
 
-Questa guida ti aiuta a testare `timeprogressive-rename` prima di usarlo sui tuoi file reali.
+This guide helps you test `timeprogressive-rename` before using it on your real files.
 
-## Test Rapido
+## Quick Test
 
-Abbiamo già preparato dei file di test nella cartella `examples/test_files/`:
+We've already prepared test files in the `examples/test_files/` folder:
 
 ```bash
 cd examples/test_files/
 ../../timeprogressive-rename jpg
 ```
 
-Quando richiesto, inserisci un prefisso come `foto_test` e controlla l'anteprima.
-Rispondi `N` per annullare o `Y` per eseguire la rinomina.
+When prompted, enter a prefix like `photo_test` and check the preview.
+Reply `N` to cancel or `Y` to execute the rename.
 
-## Creare il Proprio Ambiente di Test
+## Create Your Own Test Environment
 
-### Opzione 1: Cartella di test con file fittizi
+### Option 1: Test folder with dummy files
 
 ```bash
-# Crea una cartella di test
+# Create a test folder
 mkdir ~/test_rename
 cd ~/test_rename
 
-# Crea alcuni file di test con timestamp diversi
+# Create some test files with different timestamps
 touch -t 202401011200 file1.jpg
 sleep 1
 touch -t 202401021200 file2.jpg
@@ -32,99 +32,99 @@ touch -t 202401031200 file3.JPG
 sleep 1
 touch -t 202401041200 document.txt
 
-# Testa lo script
+# Test the script
 timeprogressive-rename jpg txt
 ```
 
-### Opzione 2: Copia di file reali
+### Option 2: Copy real files
 
 ```bash
-# Crea una cartella di test
+# Create a test folder
 mkdir ~/test_rename
 cd ~/test_rename
 
-# Copia alcuni file reali (COPIA, non spostare!)
-cp ~/Immagini/foto*.jpg .
+# Copy some real files (COPY, don't move!)
+cp ~/Pictures/photo*.jpg .
 
-# Testa lo script
+# Test the script
 timeprogressive-rename jpg
 ```
 
-## Test Specifici
+## Specific Tests
 
 ### Test 1: Case Insensitivity
 
-Verifica che lo script trovi file con estensioni maiuscole/minuscole:
+Verify that the script finds files with uppercase/lowercase extensions:
 
 ```bash
 mkdir test_case
 cd test_case
 touch file1.jpg file2.JPG file3.Jpg
 timeprogressive-rename jpg
-# Dovrebbe trovare tutti e 3 i file
+# Should find all 3 files
 ```
 
-### Test 2: Multi-estensione
+### Test 2: Multi-extension
 
-Verifica che funzioni con più estensioni:
+Verify it works with multiple extensions:
 
 ```bash
 mkdir test_multi
 cd test_multi
 touch img1.jpg img2.png doc1.pdf
 timeprogressive-rename jpg png pdf
-# Dovrebbe trovare tutti i file
+# Should find all files
 ```
 
-### Test 3: Ordinamento per data
+### Test 3: Date sorting
 
-Verifica l'ordinamento corretto:
+Verify correct sorting:
 
 ```bash
 mkdir test_order
 cd test_order
 
-# Crea file con date specifiche (formato: YYYYMMDDhhmm)
+# Create files with specific dates (format: YYYYMMDDhhmm)
 touch -t 202403011200 newer.jpg
 touch -t 202301011200 older.jpg
 touch -t 202302011200 middle.jpg
 
 timeprogressive-rename jpg
-# L'ordine dovrebbe essere: older (001), middle (002), newer (003)
+# Order should be: older (001), middle (002), newer (003)
 ```
 
-### Test 4: Gestione conflitti
+### Test 4: Conflict handling
 
-Verifica la gestione dei conflitti di nome:
+Verify name conflict handling:
 
 ```bash
 mkdir test_conflict
 cd test_conflict
 
-# Crea file che potrebbero avere conflitti
+# Create files that might have conflicts
 touch file1.jpg file2.jpg
-# Crea già un file con il nome target
+# Create a file with the target name
 touch test_001.jpg
 
-# Testa con prefisso "test"
+# Test with prefix "test"
 timeprogressive-rename jpg
-# Tutti i file dovrebbero essere rinominati correttamente
+# All files should be renamed correctly
 ```
 
-### Test 5: Nessun file trovato
+### Test 5: No files found
 
-Verifica il comportamento quando non ci sono file:
+Verify behavior when there are no files:
 
 ```bash
 mkdir test_empty
 cd test_empty
 timeprogressive-rename jpg
-# Dovrebbe mostrare messaggio che non ci sono file
+# Should show message that no files found
 ```
 
-### Test 6: Solo sottocartelle
+### Test 6: Only subfolders
 
-Verifica che NON rinomini file nelle sottocartelle:
+Verify that it does NOT rename files in subfolders:
 
 ```bash
 mkdir test_subdir
@@ -134,71 +134,71 @@ mkdir subdir
 touch subdir/file2.jpg
 
 timeprogressive-rename jpg
-# Dovrebbe trovare solo file1.jpg, non file2.jpg
+# Should find only file1.jpg, not file2.jpg
 ```
 
-## Checklist di Test Completa
+## Complete Test Checklist
 
-Prima di usare lo script su file importanti, verifica:
+Before using the script on important files, verify:
 
-- [ ] Lo script trova correttamente i file con le estensioni specificate
-- [ ] L'ordinamento per data funziona correttamente
-- [ ] L'anteprima mostra i nomi corretti
-- [ ] La conferma Y/N funziona
-- [ ] I file vengono effettivamente rinominati quando confermi
-- [ ] Le statistiche finali sono corrette
-- [ ] Non ci sono errori nel terminale
-- [ ] I file nelle sottocartelle NON vengono toccati
-- [ ] Le estensioni maiuscole/minuscole sono gestite correttamente
+- [ ] Script correctly finds files with specified extensions
+- [ ] Date sorting works correctly
+- [ ] Preview shows correct names
+- [ ] Y/N confirmation works
+- [ ] Files are actually renamed when confirmed
+- [ ] Final statistics are correct
+- [ ] No errors in terminal
+- [ ] Files in subfolders are NOT touched
+- [ ] Uppercase/lowercase extensions are handled correctly
 
-## Test Automatizzato (Bash Script)
+## Automated Testing (Bash Script)
 
-Puoi creare uno script per testare automaticamente:
+You can create a script to test automatically:
 
 ```bash
 #!/bin/bash
 # test_script.sh
 
-echo "=== Test Time Progressive Rename ==="
+echo "=== Time Progressive Rename Test ==="
 
 # Setup
 TEST_DIR="/tmp/test_rename_$$"
 mkdir -p "$TEST_DIR"
 cd "$TEST_DIR"
 
-# Crea file di test
-echo "Creazione file di test..."
+# Create test files
+echo "Creating test files..."
 touch -t 202301011200 old.jpg
 touch -t 202302011200 middle.jpg
 touch -t 202303011200 new.jpg
 touch other.txt
 
-# Test 1: Trova solo jpg
-echo "Test 1: Ricerca file jpg..."
+# Test 1: Find only jpg files
+echo "Test 1: Searching for jpg files..."
 FOUND=$(find . -maxdepth 1 -iname "*.jpg" | wc -l)
 if [ "$FOUND" -eq 3 ]; then
-    echo "✓ Test 1 passed: Trovati 3 file jpg"
+    echo "✓ Test 1 passed: Found 3 jpg files"
 else
-    echo "✗ Test 1 failed: Trovati $FOUND file invece di 3"
+    echo "✗ Test 1 failed: Found $FOUND files instead of 3"
 fi
 
-# Test 2: Esegui script in modalità dry-run
-echo "Test 2: Esecuzione script (dry-run)..."
+# Test 2: Execute script in dry-run mode
+echo "Test 2: Running script (dry-run)..."
 echo -e "test\nN" | timeprogressive-rename jpg
 if [ $? -eq 0 ]; then
-    echo "✓ Test 2 passed: Script eseguito senza errori"
+    echo "✓ Test 2 passed: Script executed without errors"
 else
-    echo "✗ Test 2 failed: Errore nell'esecuzione"
+    echo "✗ Test 2 failed: Error in execution"
 fi
 
 # Cleanup
 cd /
 rm -rf "$TEST_DIR"
 
-echo "=== Test completati ==="
+echo "=== Tests completed ==="
 ```
 
-Rendi eseguibile e lancia:
+Make executable and run:
 ```bash
 chmod +x test_script.sh
 ./test_script.sh
@@ -206,39 +206,39 @@ chmod +x test_script.sh
 
 ## Debugging
 
-Se qualcosa non funziona, puoi aggiungere output di debug allo script Python.
+If something doesn't work, you can add debug output to the Python script.
 
-Apri `timeprogressive-rename` con Kate e aggiungi print di debug:
+Open `timeprogressive-rename` with your editor and add debug prints:
 
 ```python
-# Esempio di debug
-print(f"DEBUG: File trovati: {files}")
-print(f"DEBUG: Timestamp file: {timestamp}")
+# Example debug
+print(f"DEBUG: Files found: {files}")
+print(f"DEBUG: File timestamp: {timestamp}")
 ```
 
-Oppure esegui Python in modalità verbose:
+Or run Python in verbose mode:
 
 ```bash
 python3 -v timeprogressive-rename jpg
 ```
 
-## Ripristino dopo un Test
+## Recovery After a Test
 
-Se hai fatto un test e vuoi ripristinare i nomi originali:
+If you ran a test and want to restore original names:
 
-1. **Se hai un backup**: Ripristina dalla copia
-2. **Se ricordi i nomi**: Rinomina manualmente
-3. **Se vuoi tornare indietro**: Usa di nuovo lo script con i vecchi nomi come prefisso
+1. **If you have a backup**: Restore from the copy
+2. **If you remember the names**: Rename manually
+3. **If you want to go back**: Use the script again with old names as prefix
 
-## Note Importanti
+## Important Notes
 
-⚠️ **IMPORTANTE**: Prima di usare lo script su file importanti:
-1. Fai **SEMPRE** un backup completo
-2. Testa in una cartella di prova
-3. Verifica l'anteprima attentamente
-4. Se non sei sicuro, rispondi `N` e controlla meglio
+⚠️ **IMPORTANT**: Before using the script on important files:
+1. **ALWAYS** make a complete backup
+2. Test in a test folder
+3. Verify the preview carefully
+4. If unsure, reply `N` and check more carefully
 
-💡 **SUGGERIMENTO**: Per file molto importanti (foto di matrimonio, documenti legali, ecc.), considera di:
-- Fare più di un backup
-- Testare lo script su una copia prima
-- Verificare che i backup siano integri prima di procedere
+💡 **SUGGESTION**: For very important files (wedding photos, legal documents, etc.), consider:
+- Making more than one backup
+- Testing the script on a copy first
+- Verifying that backups are intact before proceeding

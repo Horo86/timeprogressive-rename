@@ -1,199 +1,199 @@
-# Guida Git per Time Progressive Rename
+# Git Guide for Time Progressive Rename
 
-## Prerequisiti
+## Prerequisites
 
-1. Git deve essere installato sul tuo sistema:
+1. Git must be installed on your system:
 ```bash
 sudo pacman -S git
 ```
 
-2. Configura Git con il tuo nome e email (fallo solo la prima volta):
+2. Configure Git with your name and email (do this only once):
 ```bash
-git config --global user.name "Il Tuo Nome"
-git config --global user.email "tua.email@esempio.com"
+git config --global user.name "Your Name"
+git config --global user.email "your.email@example.com"
 ```
 
-## Passo 1: Inizializzare il repository locale
+## Step 1: Initialize the local repository
 
-Nella cartella del progetto, esegui:
+In the project folder, run:
 
 ```bash
-cd /percorso/a/timeprogressive-rename
+cd /path/to/timeprogressive-rename
 git init
 ```
 
-Questo crea un repository Git locale nella cartella.
+This creates a local Git repository in the folder.
 
-## Passo 2: Aggiungere i file al repository
+## Step 2: Add files to the repository
 
 ```bash
-# Aggiungi tutti i file al staging
+# Add all files to staging
 git add .
 
-# Verifica quali file sono stati aggiunti
+# Verify which files were added
 git status
 
-# Crea il primo commit
+# Create the first commit
 git commit -m "Initial commit: Time Progressive Rename v1.0.0"
 ```
 
-## Passo 3: Creare un repository su GitHub
+## Step 3: Create a repository on GitHub
 
-1. Vai su https://github.com
-2. Clicca sul pulsante "+" in alto a destra
-3. Seleziona "New repository"
-4. Compila i campi:
+1. Go to https://github.com
+2. Click the "+" button in the top right
+3. Select "New repository"
+4. Fill in the fields:
    - **Repository name**: `timeprogressive-rename`
-   - **Description**: "Script Python per rinominare file con numerazione progressiva basata su data"
-   - **Public/Private**: Scegli se vuoi che sia pubblico o privato
-   - ⚠️ **NON** selezionare "Initialize this repository with a README" (ne hai già uno)
-   - ⚠️ **NON** aggiungere .gitignore o license (li hai già)
-5. Clicca "Create repository"
+   - **Description**: "Python script to rename files with progressive numbering based on date"
+   - **Public/Private**: Choose whether you want it public or private
+   - ⚠️ **DO NOT** select "Initialize this repository with a README" (you already have one)
+   - ⚠️ **DO NOT** add .gitignore or license (you already have them)
+5. Click "Create repository"
 
-## Passo 4: Collegare il repository locale a GitHub
+## Step 4: Connect the local repository to GitHub
 
-GitHub ti mostrerà delle istruzioni. Usa queste per collegare il tuo repo locale:
+GitHub will show you instructions. Use these to connect your local repo:
 
 ```bash
-# Aggiungi il repository remoto (sostituisci 'tuousername' con il tuo username GitHub)
-git remote add origin https://github.com/tuousername/timeprogressive-rename.git
+# Add the remote repository (replace 'yourusername' with your GitHub username)
+git remote add origin https://github.com/yourusername/timeprogressive-rename.git
 
-# Verifica che il remote sia stato aggiunto correttamente
+# Verify that the remote was added correctly
 git remote -v
 
-# Rinomina il branch principale in 'main' (se necessario)
+# Rename the main branch to 'main' (if necessary)
 git branch -M main
 
-# Carica il codice su GitHub
+# Upload the code to GitHub
 git push -u origin main
 ```
 
-La prima volta che fai push, GitHub ti chiederà di autenticarti.
+The first time you push, GitHub will ask you to authenticate.
 
-## Passo 5: Autenticazione GitHub
+## Step 5: GitHub Authentication
 
-GitHub non supporta più password dalla linea di comando. Hai due opzioni:
+GitHub no longer supports passwords from the command line. You have two options:
 
-### Opzione A: Personal Access Token (Consigliato)
+### Option A: Personal Access Token (Recommended)
 
-1. Vai su GitHub.com → Settings → Developer settings → Personal access tokens → Tokens (classic)
-2. Clicca "Generate new token (classic)"
-3. Dai un nome al token (es. "timeprogressive-rename-dev")
-4. Seleziona lo scope: `repo` (accesso completo ai repository)
-5. Clicca "Generate token"
-6. **IMPORTANTE**: Copia il token subito (non lo vedrai più!)
-7. Quando fai `git push`, usa il token come password
+1. Go to GitHub.com → Settings → Developer settings → Personal access tokens → Tokens (classic)
+2. Click "Generate new token (classic)"
+3. Give the token a name (e.g. "timeprogressive-rename-dev")
+4. Select the scope: `repo` (full access to repositories)
+5. Click "Generate token"
+6. **IMPORTANT**: Copy the token immediately (you won't see it again!)
+7. When you do `git push`, use the token as password
 
-### Opzione B: SSH Key
+### Option B: SSH Key
 
-1. Genera una chiave SSH:
+1. Generate an SSH key:
 ```bash
-ssh-keygen -t ed25519 -C "tua.email@esempio.com"
+ssh-keygen -t ed25519 -C "your.email@example.com"
 ```
 
-2. Aggiungi la chiave all'agent SSH:
+2. Add the key to SSH agent:
 ```bash
 eval "$(ssh-agent -s)"
 ssh-add ~/.ssh/id_ed25519
 ```
 
-3. Copia la chiave pubblica:
+3. Copy the public key:
 ```bash
 cat ~/.ssh/id_ed25519.pub
 ```
 
-4. Vai su GitHub.com → Settings → SSH and GPG keys → New SSH key
-5. Incolla la chiave e salvala
-6. Cambia l'URL del repository in SSH:
+4. Go to GitHub.com → Settings → SSH and GPG keys → New SSH key
+5. Paste the key and save it
+6. Change the repository URL to SSH:
 ```bash
-git remote set-url origin git@github.com:tuousername/timeprogressive-rename.git
+git remote set-url origin git@github.com:yourusername/timeprogressive-rename.git
 ```
 
-## Comandi Git utili per il futuro
+## Useful Git Commands for the Future
 
-### Fare modifiche e aggiornarle su GitHub
+### Make changes and update them on GitHub
 
 ```bash
-# Dopo aver modificato dei file
-git status                    # Vedi quali file sono cambiati
-git add .                     # Aggiungi tutti i file modificati
-git commit -m "Descrizione delle modifiche"
-git push                      # Carica su GitHub
+# After modifying files
+git status                    # See which files changed
+git add .                     # Add all modified files
+git commit -m "Description of changes"
+git push                      # Upload to GitHub
 ```
 
-### Vedere la cronologia dei commit
+### View commit history
 
 ```bash
-git log                       # Cronologia completa
-git log --oneline            # Cronologia compatta
+git log                       # Complete history
+git log --oneline            # Compact history
 ```
 
-### Creare un branch per nuove funzionalità
+### Create a branch for new features
 
 ```bash
-git checkout -b nome-feature  # Crea e passa a un nuovo branch
-# ... fai modifiche ...
+git checkout -b feature-name  # Create and switch to new branch
+# ... make changes ...
 git add .
-git commit -m "Aggiunta nuova feature"
-git push -u origin nome-feature
+git commit -m "Add new feature"
+git push -u origin feature-name
 
-# Quando hai finito, torna al main e fai merge
+# When you're done, go back to main and merge
 git checkout main
-git merge nome-feature
+git merge feature-name
 git push
 ```
 
-### Vedere le differenze
+### View differences
 
 ```bash
-git diff                      # Modifiche non ancora in staging
-git diff --staged            # Modifiche in staging
+git diff                      # Changes not yet staged
+git diff --staged            # Changes in staging
 ```
 
-### Annullare modifiche
+### Undo changes
 
 ```bash
-git checkout -- file.txt     # Annulla modifiche a un file
-git reset HEAD file.txt      # Rimuovi file dallo staging
-git reset --soft HEAD~1      # Annulla ultimo commit (mantiene modifiche)
-git reset --hard HEAD~1      # Annulla ultimo commit (ELIMINA modifiche!)
+git checkout -- file.txt     # Undo changes to a file
+git reset HEAD file.txt      # Remove file from staging
+git reset --soft HEAD~1      # Undo last commit (keeps changes)
+git reset --hard HEAD~1      # Undo last commit (DELETE changes!)
 ```
 
-## Workflow tipico
+## Typical Workflow
 
-1. Modifica i file nel tuo editor (Kate)
-2. `git status` - Vedi cosa hai cambiato
-3. `git add .` - Aggiungi le modifiche
-4. `git commit -m "Descrizione chiara della modifica"`
-5. `git push` - Carica su GitHub
+1. Modify files in your editor
+2. `git status` - See what you changed
+3. `git add .` - Add the changes
+4. `git commit -m "Clear description of change"`
+5. `git push` - Upload to GitHub
 
-## Consigli per i commit message
+## Tips for Commit Messages
 
-✅ **Buoni esempi:**
-- "Fix: Corretto bug nella gestione dei conflitti"
-- "Feature: Aggiunto supporto per estensioni case-sensitive"
-- "Docs: Aggiornato README con nuovi esempi"
-- "Refactor: Migliorata leggibilità funzione rename_files"
+✅ **Good examples:**
+- "Fix: Fixed conflict handling bug"
+- "Feature: Added case-sensitive extension support"
+- "Docs: Updated README with new examples"
+- "Refactor: Improved readability of rename_files function"
 
-❌ **Cattivi esempi:**
+❌ **Bad examples:**
 - "fix"
-- "modifiche"
-- "aggiornamento"
+- "changes"
+- "update"
 - "aaaa"
 
-## Risorse utili
+## Useful Resources
 
 - Git cheat sheet: https://education.github.com/git-cheat-sheet-education.pdf
-- Pro Git book (gratuito): https://git-scm.com/book/en/v2
+- Pro Git book (free): https://git-scm.com/book/en/v2
 - GitHub Docs: https://docs.github.com
 
-## Struttura del tuo progetto su GitHub
+## Your Project Structure on GitHub
 
-Una volta caricato, il tuo repository avrà questa struttura:
+Once uploaded, your repository will have this structure:
 
 ```
-https://github.com/tuousername/timeprogressive-rename/
-├── README.md (mostrato automaticamente nella home)
+https://github.com/yourusername/timeprogressive-rename/
+├── README.md (automatically displayed on home page)
 ├── LICENSE
 ├── .gitignore
 ├── timeprogressive-rename
@@ -201,4 +201,4 @@ https://github.com/tuousername/timeprogressive-rename/
     └── test_files/
 ```
 
-Il README.md verrà renderizzato automaticamente nella pagina principale del repo!
+The README.md will be automatically rendered on the repo's main page!

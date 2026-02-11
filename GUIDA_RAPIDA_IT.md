@@ -1,50 +1,50 @@
-# Time Progressive Rename - Guida Rapida Italiana
+# Time Progressive Rename - Quick Start Guide
 
-## 🎉 Il tuo progetto è pronto!
+## 🎉 Your project is ready!
 
-Hai ora un progetto Python completo e professionale per rinominare file con numerazione progressiva basata sulla data.
+You now have a complete and professional Python project to rename files with progressive numbering based on date.
 
-## 📦 Cosa hai ricevuto
+## 📦 What You Received
 
-Il progetto è composto da:
+The project consists of:
 
-1. **timeprogressive-rename** - Lo script Python principale (eseguibile)
-2. **README.md** - Documentazione completa del progetto (in inglese)
-3. **EXAMPLES.md** - Esempi pratici d'uso
-4. **TESTING.md** - Guida per testare lo script
-5. **GIT_GUIDE.md** - Guida Git per principianti
-6. **LICENSE** - Licenza MIT
-7. **.gitignore** - File da ignorare in Git
-8. **examples/test_files/** - Cartella con file di test
+1. **timeprogressive-rename** - Main Python script (executable)
+2. **README.md** - Complete project documentation (in English)
+3. **EXAMPLES.md** - Practical usage examples
+4. **TESTING.md** - Guide for testing the script
+5. **GIT_GUIDE.md** - Git guide for beginners
+6. **LICENSE** - MIT License
+7. **.gitignore** - Files to ignore in Git
+8. **examples/test_files/** - Folder with test files
 
-## 🚀 Come iniziare
+## 🚀 Getting Started
 
-### 1. Copia il progetto sul tuo PC Arch Linux
+### 1. Copy the project to your PC
 
-Scarica la cartella `timeprogressive-rename` che ti ho preparato e copiala dove preferisci, ad esempio:
+Download the `timeprogressive-rename` folder and copy it where you prefer, for example:
 
 ```bash
-# Supponiamo tu l'abbia scaricata in ~/Download
-mv ~/Download/timeprogressive-rename ~/Progetti/
+# Assuming you downloaded it to ~/Download
+mv ~/Download/timeprogressive-rename ~/Projects/
 
-cd ~/Progetti/timeprogressive-rename
+cd ~/Projects/timeprogressive-rename
 ```
 
-### 2. Rendi lo script eseguibile
+### 2. Make the script executable
 
 ```bash
 chmod +x timeprogressive-rename
 ```
 
-### 3. (Opzionale) Installa lo script a livello di sistema
+### 3. (Optional) Install the script system-wide
 
-Se vuoi usarlo da qualsiasi cartella senza scrivere il percorso completo:
+If you want to use it from any folder without typing the full path:
 
 ```bash
 sudo cp timeprogressive-rename /usr/local/bin/
 ```
 
-Oppure, se preferisci non usare sudo, puoi aggiungerlo al tuo PATH personale:
+Or, if you prefer not to use sudo, you can add it to your personal PATH:
 
 ```bash
 mkdir -p ~/.local/bin
@@ -53,193 +53,193 @@ echo 'export PATH="$HOME/.local/bin:$PATH"' >> ~/.bashrc
 source ~/.bashrc
 ```
 
-### 4. Prova lo script!
+### 4. Try the script!
 
 ```bash
-# Vai nella cartella di test
+# Go to the test folder
 cd examples/test_files/
 
-# Esegui lo script
+# Run the script
 ../../timeprogressive-rename jpg
 
-# Quando richiesto, inserisci un prefisso, ad esempio: foto_test
-# Controlla l'anteprima
-# Rispondi N per annullare o Y per eseguire
+# When prompted, enter a prefix, for example: photo_test
+# Check the preview
+# Reply N to cancel or Y to execute
 ```
 
-## 📝 Uso Quotidiano
+## 📝 Daily Usage
 
-### Esempio: Rinominare le foto delle vacanze
+### Example: Rename vacation photos
 
 ```bash
-# Vai nella cartella con le foto
-cd ~/Immagini/vacanza_2024/
+# Go to the folder with photos
+cd ~/Pictures/vacation_2024/
 
-# Esegui lo script
+# Run the script
 timeprogressive-rename jpg jpeg
 
-# Inserisci prefisso: vacanza_mare
-# Controlla anteprima
-# Conferma con Y
+# Enter prefix: vacation_beach
+# Check preview
+# Confirm with Y
 ```
 
-### Esempio: Rinominare screenshot
+### Example: Rename screenshots
 
 ```bash
-cd ~/Immagini/Screenshot/
+cd ~/Pictures/Screenshots/
 timeprogressive-rename png
-# Prefisso: screen
+# Prefix: screen
 ```
 
-## 🌟 Caratteristiche Principali
+## 🌟 Main Features
 
-- ✨ **Ordinamento automatico** per data di creazione/modifica
-- 🎨 **Interfaccia colorata** nel terminale
-- 👁️ **Anteprima** prima di modificare i file
-- 🔒 **Gestione sicura** dei conflitti di nome
-- 🔤 **Case-insensitive** per le estensioni
-- 📊 **Statistiche** al termine dell'operazione
+- ✨ **Automatic sorting** by creation/modification date
+- 🎨 **Colored interface** in terminal
+- 👁️ **Preview** before modifying files
+- 🔒 **Safe handling** of name conflicts
+- 🔤 **Case-insensitive** for extensions
+- 📊 **Statistics** at end of operation
 
-## 🐙 Caricamento su GitHub
+## 🐙 Upload to GitHub
 
-### Prima volta che usi Git?
+### First time using Git?
 
-1. **Installa Git** (se non ce l'hai già):
+1. **Install Git** (if you don't have it already):
 ```bash
 sudo pacman -S git
 ```
 
-2. **Configura Git** (solo la prima volta):
+2. **Configure Git** (only the first time):
 ```bash
-git config --global user.name "Il Tuo Nome"
-git config --global user.email "tua.email@esempio.com"
+git config --global user.name "Your Name"
+git config --global user.email "your.email@example.com"
 ```
 
-### Carica il progetto su GitHub
+### Upload the project to GitHub
 
-Il repository Git è già pronto! Segui questi passaggi:
+The Git repository is already ready! Follow these steps:
 
-1. **Vai su GitHub.com** e crea un account (se non ce l'hai)
+1. **Go to GitHub.com** and create an account (if you don't have one)
 
-2. **Crea un nuovo repository**:
-   - Clicca sul "+" in alto a destra → "New repository"
-   - Nome: `timeprogressive-rename`
-   - Descrizione: "Script Python per rinominare file con numerazione progressiva"
-   - **NON** selezionare "Initialize with README" (ce l'hai già!)
-   - Clicca "Create repository"
+2. **Create a new repository**:
+   - Click "+" in the top right → "New repository"
+   - Name: `timeprogressive-rename`
+   - Description: "Python script to rename files with progressive numbering"
+   - **DO NOT** select "Initialize with README" (you already have one!)
+   - Click "Create repository"
 
-3. **Collega il tuo repository locale a GitHub**:
+3. **Connect your local repository to GitHub**:
 ```bash
-cd ~/Progetti/timeprogressive-rename
+cd ~/Projects/timeprogressive-rename
 
-# Sostituisci 'tuousername' con il tuo username GitHub
-git remote add origin https://github.com/tuousername/timeprogressive-rename.git
+# Replace 'yourusername' with your GitHub username
+git remote add origin https://github.com/yourusername/timeprogressive-rename.git
 
-# Carica il codice
+# Upload the code
 git push -u origin main
 ```
 
-4. **Autenticazione**:
-   - GitHub ti chiederà username e password
-   - **IMPORTANTE**: Non puoi più usare la password normale!
-   - Devi creare un **Personal Access Token**:
-     - Vai su GitHub.com → Settings → Developer settings
+4. **Authentication**:
+   - GitHub will ask for username and password
+   - **IMPORTANT**: You can no longer use the regular password!
+   - You need to create a **Personal Access Token**:
+     - Go to GitHub.com → Settings → Developer settings
      - Personal access tokens → Tokens (classic)
      - Generate new token (classic)
-     - Seleziona "repo"
-     - Copia il token
-     - Usalo al posto della password quando fai push
+     - Select "repo"
+     - Copy the token
+     - Use it instead of password when pushing
 
-### Futuri aggiornamenti
+### Future Updates
 
-Quando modifichi il codice:
+When you modify the code:
 
 ```bash
-# Vedi cosa hai modificato
+# See what you changed
 git status
 
-# Aggiungi le modifiche
+# Add the changes
 git add .
 
-# Committa con un messaggio descrittivo
-git commit -m "Fix: Corretto bug nella gestione dei conflitti"
+# Commit with a descriptive message
+git commit -m "Fix: Fixed conflict handling bug"
 
-# Carica su GitHub
+# Upload to GitHub
 git push
 ```
 
-## 📖 Documentazione Completa
+## 📖 Complete Documentation
 
-Leggi i file di documentazione per saperne di più:
+Read the documentation files to learn more:
 
-- **README.md** - Documentazione completa con tutti i dettagli tecnici
-- **EXAMPLES.md** - 6 scenari d'uso pratici con comandi completi
-- **TESTING.md** - Come testare lo script in sicurezza
-- **GIT_GUIDE.md** - Tutto su Git e GitHub per principianti
+- **README.md** - Complete documentation with all technical details
+- **EXAMPLES.md** - 6 practical usage scenarios with complete commands
+- **TESTING.md** - How to test the script safely
+- **GIT_GUIDE.md** - Everything about Git and GitHub for beginners
 
-## 🔧 Personalizzazioni
+## 🔧 Customization
 
-Vuoi modificare lo script? Apri `timeprogressive-rename` con Kate:
+Want to modify the script? Open `timeprogressive-rename` with your editor:
 
 ```bash
 kate timeprogressive-rename
 ```
 
-Il codice è ben commentato e diviso in funzioni chiare. Alcune cose che potresti voler modificare:
+The code is well-commented and divided into clear functions. Some things you might want to modify:
 
-- **Numero di cifre** nella numerazione (attualmente 3: 001, 002, ecc.)
-  - Cerca: `f"{index:03d}"` e cambia `03` con il numero di cifre desiderato
+- **Number of digits** in numbering (currently 3: 001, 002, etc.)
+  - Find: `f"{index:03d}"` and change `03` to desired number of digits
 
-- **Separatore** tra prefisso e numero (attualmente "_")
-  - Cerca: `f"{prefix}_{number}{extension}"` e cambia `_` con ciò che preferisci
+- **Separator** between prefix and number (currently "_")
+  - Find: `f"{prefix}_{number}{extension}"` and change `_` to what you prefer
 
-- **Colori** del terminale
-  - Modifica la classe `Colors` all'inizio del file
+- **Terminal colors**
+  - Modify the `Colors` class at the beginning of the file
 
-## ⚠️ Raccomandazioni di Sicurezza
+## ⚠️ Security Recommendations
 
-1. **Fai sempre un backup** prima di rinominare file importanti
-2. **Controlla l'anteprima** attentamente
-3. **Testa prima** in una cartella di prova
-4. **Non usare su file di sistema** (solo sui tuoi documenti personali)
+1. **Always make a backup** before renaming important files
+2. **Check the preview** carefully
+3. **Test first** in a test folder
+4. **Don't use on system files** (only on your personal documents)
 
-## 🆘 Aiuto e Supporto
+## 🆘 Help and Support
 
-Se hai problemi:
+If you have problems:
 
-1. Consulta **TESTING.md** per verificare che tutto funzioni
-2. Rileggi **EXAMPLES.md** per vedere se il tuo caso d'uso è coperto
-3. Controlla la sezione FAQ nel README.md
-4. Se hai caricato il progetto su GitHub, puoi aprire una "Issue"
+1. Check **TESTING.md** to verify everything works
+2. Reread **EXAMPLES.md** to see if your use case is covered
+3. Check the FAQ section in README.md
+4. If you uploaded the project to GitHub, you can open an "Issue"
 
-## 🎓 Imparare Python
+## 🎓 Learning Python
 
-Questo progetto è un ottimo punto di partenza per imparare Python! Il codice include:
+This project is a great starting point for learning Python! The code includes:
 
-- ✅ Gestione argomenti da linea di comando (`argparse`)
-- ✅ Manipolazione file e cartelle (`pathlib`)
-- ✅ Ordinamento e liste
-- ✅ Gestione errori (`try/except`)
-- ✅ Funzioni ben strutturate
-- ✅ Documentazione completa
-- ✅ Colori nel terminale
+- ✅ Command line argument handling (`argparse`)
+- ✅ File and folder manipulation (`pathlib`)
+- ✅ Sorting and lists
+- ✅ Error handling (`try/except`)
+- ✅ Well-structured functions
+- ✅ Complete documentation
+- ✅ Terminal colors
 
-Studia il codice, modificalo, sperimenta!
+Study the code, modify it, experiment!
 
-## 📜 Licenza
+## 📜 License
 
-Il progetto usa la licenza MIT - puoi fare praticamente tutto ciò che vuoi con questo codice!
+The project uses MIT license - you can do practically anything you want with this code!
 
-## ✨ Prossimi Passi
+## ✨ Next Steps
 
-1. ✅ Testa lo script con i file di esempio
-2. ✅ Usalo su un piccolo set di file reali (con backup!)
-3. ✅ Carica il progetto su GitHub
-4. ✅ Personalizza secondo le tue esigenze
-5. ✅ Condividi con altri (se vuoi)!
+1. ✅ Test the script with the example files
+2. ✅ Use it on a small set of real files (with backup!)
+3. ✅ Upload the project to GitHub
+4. ✅ Customize according to your needs
+5. ✅ Share with others (if you want)!
 
 ---
 
-**Buon divertimento con il tuo nuovo strumento!** 🚀
+**Have fun with your new tool!** 🚀
 
-Se hai domande o problemi, non esitare a chiedere.
+If you have questions or problems, don't hesitate to ask.

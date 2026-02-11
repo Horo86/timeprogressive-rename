@@ -1,183 +1,183 @@
 # Time Progressive Rename
 
-Uno script Python per rinominare file in modo organizzato aggiungendo un prefisso personalizzato e un numero progressivo basato sulla data di creazione o modifica del file.
+A Python script to rename files in an organized way by adding a custom prefix and a progressive number based on file creation or modification date.
 
-## Descrizione
+## Description
 
-`timeprogressive-rename` è uno strumento da linea di comando che permette di rinominare batch di file con estensioni specifiche, ordinandoli in base alla loro data di creazione (o modifica se la data di creazione non è disponibile) e aggiungendo una numerazione progressiva.
+`timeprogressive-rename` is a command-line tool that allows you to rename batch files with specific extensions, sorting them by their creation date (or modification date if creation date is not available) and adding progressive numbering.
 
-## Caratteristiche
+## Features
 
-- ✨ Rinomina multipli file con un singolo comando
-- 📅 Ordinamento automatico per data di creazione/modifica
-- 🎨 Interfaccia colorata e user-friendly nel terminale
-- 👁️ Anteprima delle modifiche prima dell'esecuzione (dry run)
-- 🔒 Gestione intelligente dei conflitti di nomi
-- 🔤 Ricerca case-insensitive delle estensioni
-- 📊 Statistiche dettagliate al termine dell'operazione
+- ✨ Rename multiple files with a single command
+- 📅 Automatic sorting by creation/modification date
+- 🎨 Colored and user-friendly terminal interface
+- 👁️ Preview of changes before execution (dry run)
+- 🔒 Intelligent name conflict handling
+- 🔤 Case-insensitive extension search
+- 📊 Detailed statistics at end of operation
 
-## Requisiti
+## Requirements
 
-- Python 3.6 o superiore
-- Sistema operativo Linux
+- Python 3.6 or higher
+- Linux operating system
 
-## Installazione
+## Installation
 
-1. Clona questo repository:
+1. Clone this repository:
 ```bash
-git clone https://github.com/tuousername/timeprogressive-rename.git
+git clone https://github.com/yourusername/timeprogressive-rename.git
 cd timeprogressive-rename
 ```
 
-2. Rendi lo script eseguibile:
+2. Make the script executable:
 ```bash
 chmod +x timeprogressive-rename
 ```
 
-3. (Opzionale) Sposta lo script in una directory nel tuo PATH per usarlo ovunque:
+3. (Optional) Move the script to a directory in your PATH to use it anywhere:
 ```bash
 sudo cp timeprogressive-rename /usr/local/bin/
 ```
 
-## Utilizzo
+## Usage
 
-### Sintassi base
+### Basic Syntax
 
 ```bash
-./timeprogressive-rename <estensione1> [estensione2] [estensione3] ...
+./timeprogressive-rename <extension1> [extension2] [extension3] ...
 ```
 
-### Esempi
+### Examples
 
-Rinominare tutti i file JPEG:
+Rename all JPEG files:
 ```bash
 ./timeprogressive-rename jpg jpeg
 ```
 
-Rinominare file di immagini multiple:
+Rename multiple image files:
 ```bash
 ./timeprogressive-rename jpg png gif webp
 ```
 
-Rinominare file video:
+Rename video files:
 ```bash
 ./timeprogressive-rename mp4 avi mkv
 ```
 
-### Funzionamento
+### How It Works
 
-1. **Avvio**: Esegui lo script nella cartella contenente i file da rinominare, specificando le estensioni
-2. **Prefisso**: Lo script ti chiederà di inserire un prefisso (es: "vacanza", "foto", "documento")
-3. **Anteprima**: Visualizzerai una tabella con:
-   - Numero progressivo
-   - Data di creazione/modifica
-   - Nome originale del file
-   - Nuovo nome proposto
-4. **Conferma**: Rispondi Y per procedere, N per annullare
-5. **Risultato**: Lo script esegue le rinominazioni e mostra le statistiche
+1. **Start**: Run the script in the folder containing the files to rename, specifying the extensions
+2. **Prefix**: The script will ask you to enter a prefix (e.g. "vacation", "photos", "document")
+3. **Preview**: You will see a table with:
+   - Progressive number
+   - Creation/modification date
+   - Original filename
+   - Proposed new name
+4. **Confirm**: Reply Y to proceed, N to cancel
+5. **Result**: The script executes the renames and shows statistics
 
-### Formato del nome risultante
+### Resulting Name Format
 
-I file verranno rinominati seguendo questo schema:
+Files will be renamed following this schema:
 ```
-<prefisso>_<numero>.<estensione>
+<prefix>_<number>.<extension>
 ```
 
-Dove:
-- `<prefisso>` è il testo inserito dall'utente
-- `<numero>` è un numero progressivo a 3 cifre (001, 002, 003, ...)
-- `.<estensione>` è l'estensione originale del file
+Where:
+- `<prefix>` is the text entered by the user
+- `<number>` is a progressive number with 3 digits (001, 002, 003, ...)
+- `.<extension>` is the original file extension
 
-**Esempio**:
+**Example**:
 ```
 Input: IMG_20240101.jpg, IMG_20240102.jpg, IMG_20240103.jpg
-Prefisso: vacanza
-Output: vacanza_001.jpg, vacanza_002.jpg, vacanza_003.jpg
+Prefix: vacation
+Output: vacation_001.jpg, vacation_002.jpg, vacation_003.jpg
 ```
 
-## Dettagli tecnici
+## Technical Details
 
-### Gestione della data
+### Date Handling
 
-- Lo script utilizza la data di creazione del file quando disponibile
-- Su filesystem ext4 e simili (dove la data di creazione potrebbe non essere disponibile), usa la data di modifica
-- I file vengono ordinati in ordine cronologico crescente
+- The script uses file creation date when available
+- On ext4 and similar filesystems (where creation date might not be available), it uses modification date
+- Files are sorted in chronological order (ascending)
 
-### Gestione dei conflitti
+### Conflict Handling
 
-Lo script gestisce automaticamente i conflitti di nomi:
-1. Identifica i file che avrebbero lo stesso nome del target
-2. Li rinomina temporaneamente
-3. Esegue tutte le rinominazioni principali
-4. Rinomina i file temporanei ai nomi finali
+The script automatically handles name conflicts:
+1. Identifies files that would have the same target name
+2. Renames them temporarily
+3. Executes all main renames
+4. Renames temporary files to their final names
 
-### Case sensitivity
+### Case Sensitivity
 
-Le estensioni sono trattate in modo case-insensitive:
-- `.jpg`, `.JPG`, `.Jpg` sono tutte considerate uguali
+Extensions are treated in a case-insensitive manner:
+- `.jpg`, `.JPG`, `.Jpg` are all considered equal
 
-## Documentazione
+## Documentation
 
-- **[EXAMPLES.md](EXAMPLES.md)** - Esempi pratici d'uso in vari scenari
-- **[TESTING.md](TESTING.md)** - Guida completa per testare lo script
-- **[GIT_GUIDE.md](GIT_GUIDE.md)** - Guida per principianti a Git e GitHub
+- **[EXAMPLES.md](EXAMPLES.md)** - Practical usage examples in various scenarios
+- **[TESTING.md](TESTING.md)** - Complete guide to testing the script
+- **[GIT_GUIDE.md](GIT_GUIDE.md)** - Beginner's guide to Git and GitHub
 
-## Struttura del progetto
+## Project Structure
 
 ```
 timeprogressive-rename/
-├── README.md              # Questo file
-├── EXAMPLES.md            # Esempi pratici d'uso
-├── TESTING.md             # Guida al testing
-├── GIT_GUIDE.md          # Guida Git per principianti
-├── LICENSE                # Licenza del progetto
-├── .gitignore            # File da ignorare in Git
-├── timeprogressive-rename # Script principale
+├── README.md              # This file
+├── EXAMPLES.md            # Practical usage examples
+├── TESTING.md             # Testing guide
+├── GIT_GUIDE.md          # Git guide for beginners
+├── LICENSE                # Project license
+├── .gitignore            # Files to ignore in Git
+├── timeprogressive-rename # Main script
 └── examples/
-    └── test_files/       # File di esempio per testing
+    └── test_files/       # Example files for testing
 ```
 
-## Contribuire
+## Contributing
 
-I contributi sono benvenuti! Per contribuire:
+Contributions are welcome! To contribute:
 
-1. Fai un fork del progetto
-2. Crea un branch per la tua feature (`git checkout -b feature/nuova-funzionalita`)
-3. Committa le modifiche (`git commit -am 'Aggiunge nuova funzionalità'`)
-4. Pusha il branch (`git push origin feature/nuova-funzionalita`)
-5. Apri una Pull Request
+1. Fork the project
+2. Create a branch for your feature (`git checkout -b feature/new-functionality`)
+3. Commit your changes (`git commit -am 'Add new feature'`)
+4. Push the branch (`git push origin feature/new-functionality`)
+5. Open a Pull Request
 
-## Licenza
+## License
 
-Questo progetto è rilasciato sotto licenza MIT. Vedi il file `LICENSE` per i dettagli.
+This project is released under the MIT license. See the `LICENSE` file for details.
 
-## Autore
+## Author
 
-Il tuo nome
+Your Name
 
 ## Changelog
 
-### Versione 1.0.0 (2026-02-01)
-- Rilascio iniziale
-- Rinominazione basata su data di creazione/modifica
-- Supporto multi-estensione
-- Anteprima interattiva
-- Gestione conflitti nomi
+### Version 1.0.0 (2026-02-01)
+- Initial release
+- Rename based on creation/modification date
+- Multi-extension support
+- Interactive preview
+- Name conflict handling
 
 ## FAQ
 
-**D: Lo script funziona in modo ricorsivo nelle sottocartelle?**  
-R: No, lo script opera solo nella directory corrente.
+**Q: Does the script work recursively in subfolders?**  
+A: No, the script operates only in the current directory.
 
-**D: Posso annullare le modifiche dopo aver confermato?**  
-R: No, per questo è importante verificare attentamente l'anteprima prima di confermare.
+**Q: Can I undo changes after confirming?**  
+A: No, which is why it's important to carefully review the preview before confirming.
 
-**D: Cosa succede se ci sono file con la stessa data?**  
-R: I file con la stessa data mantengono un ordine deterministico basato sul loro ordine nel filesystem.
+**Q: What happens if there are files with the same date?**  
+A: Files with the same date maintain a deterministic order based on their order in the filesystem.
 
-**D: Posso usare spazi nel prefisso?**  
-R: Sì, il prefisso può contenere spazi e caratteri speciali.
+**Q: Can I use spaces in the prefix?**  
+A: Yes, the prefix can contain spaces and special characters.
 
-## Supporto
+## Support
 
-Per bug, domande o suggerimenti, apri una issue su GitHub.
+For bugs, questions or suggestions, open an issue on GitHub.
