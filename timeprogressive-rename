@@ -5,7 +5,7 @@ timeprogressive-rename - Rename files with progressive numbering based on date
 This script renames files with specified extensions by adding a prefix
 and progressive numbering based on file creation (or modification) date.
 
-Author: Your Name
+Author: Horo86
 License: MIT
 """
 
